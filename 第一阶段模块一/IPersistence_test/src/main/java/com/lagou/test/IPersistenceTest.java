@@ -6,7 +6,7 @@ import com.lagou.pojo.User;
 import com.lagou.sqlSession.SqlSession;
 import com.lagou.sqlSession.SqlSessionFactory;
 import com.lagou.sqlSession.SqlSessionFactoryBuilder;
-import com.lagou.utils.SqlSessionInit;
+
 import org.dom4j.DocumentException;
 import org.junit.Test;
 
@@ -48,7 +48,10 @@ public class IPersistenceTest {
 
     @Test
     public void insert() throws Exception {
-        SqlSession sqlSession = SqlSessionInit.initSqlSession();
+        InputStream resourceAsSteam = Resources.getResourceAsSteam("sqlMapConfig.xml");
+        SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(resourceAsSteam);
+        SqlSession sqlSession = sqlSessionFactory.openSession();
+
         //调用
         User user = new User();
         user.setId(1);
@@ -61,7 +64,8 @@ public class IPersistenceTest {
 
     @Test
     public void update() throws Exception {
-        SqlSession sqlSession = SqlSessionInit.initSqlSession();
+
+        SqlSession sqlSession = initSqlSession();
         //调用
         User user = new User();
         user.setId(1);
@@ -73,7 +77,8 @@ public class IPersistenceTest {
 
     @Test
     public void delete() throws Exception {
-        SqlSession sqlSession = SqlSessionInit.initSqlSession();
+
+        SqlSession sqlSession = initSqlSession();
         //调用
         User user = new User();
         user.setId(1);
@@ -81,7 +86,12 @@ public class IPersistenceTest {
         userDao.delete(user);
 
     }
-
+    public  SqlSession initSqlSession() throws PropertyVetoException, DocumentException {
+        InputStream resourceAsSteam = Resources.getResourceAsSteam("sqlMapConfig.xml");
+        SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(resourceAsSteam);
+        SqlSession sqlSession = sqlSessionFactory.openSession();
+        return sqlSession;
+    }
 
 
 }

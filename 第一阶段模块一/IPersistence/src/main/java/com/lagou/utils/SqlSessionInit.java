@@ -16,7 +16,7 @@ import java.io.InputStream;
  */
 public class SqlSessionInit {
 
-    public static SqlSession initSqlSession() throws PropertyVetoException, DocumentException {
+    public  SqlSession initSqlSession() throws PropertyVetoException, DocumentException {
         InputStream resourceAsSteam = Resources.getResourceAsSteam("sqlMapConfig.xml");
         SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(resourceAsSteam);
         SqlSession sqlSession = sqlSessionFactory.openSession();
